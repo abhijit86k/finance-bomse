@@ -1,0 +1,10 @@
+=====================================================================
+Date	: 20131006
+Author	: Abhijit K
+=====================================================================
+
+Project to implement Stock Quote Picker for BSE/NSE.
+
+Intended to replace and augment the files that come with the
+PERL Finance::Quote package 
+(located in /usr/share/perl5/Finance)
