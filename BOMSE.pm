@@ -58,9 +58,10 @@ sub bomse {
 
   foreach my $stocks (@stocks)
     {
-      $reply = $ua->request(GET $url.join('',"s=",$stocks));
+      #$reply = $ua->request(GET $url.join('',"s=",$stocks));
+      
 
-      if ($reply->is_success)
+      if (1)
         {
 		
           $my_last = 50.0;
