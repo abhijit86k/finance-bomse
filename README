@@ -8,3 +8,6 @@ Project to implement Stock Quote Picker for BSE/NSE.
 Intended to replace and augment the files that come with the
 PERL Finance::Quote package 
 (located in /usr/share/perl5/Finance)
+
+BSERO module from:
+http://www.strainu.ro/projects/bse-stock-prices-in-gnucash/
