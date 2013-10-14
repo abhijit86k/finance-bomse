@@ -1,0 +1,7 @@
+Yahoo URL for Indian stocks in JSON format:
+
+Where NAME is the scrip name (SUZLON, or RECLTD) and XC is a two letter 
+exchange code - BO for BSE (bombay) and NS for NSE
+
+http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=json
+http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=xml
