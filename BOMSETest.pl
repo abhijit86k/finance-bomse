@@ -9,7 +9,7 @@ use Finance::Quote;
 # Test BSERO functions.
 
 my $q      = Finance::Quote->new();
-my @stocks = ("SUZLON.BO", "RECLTD.NS", "AMZN");
+my @stocks = ("SUULON.BO", "RECLTD.NS", "AMZN");
 
 
 my %quotes = $q->fetch("bomse", @stocks);

@@ -78,11 +78,27 @@ foreach my $stocks (@stocks)
 		print "\nFetched $stocks. Hit a key. \n";
 		my $user_input = <>;
 
+		
+
 		if ( $code == 200 )
         {
 			#HTTP_Response succeeded - parse the data
-
-          $my_last = 50.0;
+			my $json_data = JSON::decode_json $body;				
+			#print ref($json_data);
+			#print "size of hash:  " . keys( $json_data ) . ".\n";
+			
+			my $json_data_count= $json_data->{'list'}{'meta'}{'count'};
+			print "\n Got data with Count = $json_data_count \n"; 			
+			
+			if ($json_data_count != 1 )
+			{
+			 $info{$stocks, "success"}  =0;
+			 $info{$stocks, "errormsg"}="Error retrieving quote for $stocks - no listing for this name found. Please check scrip name and the two letter extension (if any)";
+			 
+			}					
+			else
+			{			
+			 $my_last = 50.0;
           $my_p_change = 1.5;
           $my_volume = 100;
           $my_high = 52.1;
@@ -106,6 +122,7 @@ foreach my $stocks (@stocks)
 
           $info{$stocks,"currency"} = "RON";
 
+        }
         }
 
 		  #HTTP request fail
