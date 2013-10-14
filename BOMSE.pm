@@ -21,10 +21,10 @@
 require 5.005;
 
 use strict;
-
+use Data::Dumper;
 package Finance::Quote::BOMSE;
 
-use vars qw($VERSION $BSERO_URL);
+use vars qw($VERSION $YIND_URL_HEAD $YIND_URL_TAIL);
 
 use LWP::UserAgent;
 use HTTP::Request::Common;
@@ -32,7 +32,8 @@ use HTML::TableExtract;
 
 $VERSION='0.1';
 
-my $BSERO_URL = 'http://www.bvb.ro/mobile/m_SecurityDetails.aspx?';
+my $YIND_URL_HEAD	= 'http://finance.yahoo.com/webservice/v1/symbols/';
+my $YIND_URL_TAIL 	= '/quote?format=json';
 
 
 sub methods { return ( india => \&bomse,
@@ -54,12 +55,16 @@ sub bomse {
   my($my_date,$my_last,$my_p_change,$my_volume,$my_high,$my_low,$my_open);
   my $ua = $quoter->user_agent();
 
-  $url = $BSERO_URL;
 
   foreach my $stocks (@stocks)
     {
-      #$reply = $ua->request(GET $url.join('',"s=",$stocks));
+           
+      $url = $YIND_URL_HEAD.$stocks.$YIND_URL_TAIL;
+      print "\nURL is $url\n" ;
       
+      $reply = $ua->request(GET $url);
+		print $reply;
+	
 
       if (1)
         {
