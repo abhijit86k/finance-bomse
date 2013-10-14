@@ -22,6 +22,7 @@ require 5.005;
 
 use strict;
 use Data::Dumper;
+use JSON qw( decode_json );
 package Finance::Quote::BOMSE;
 
 use vars qw($VERSION $YIND_URL_HEAD $YIND_URL_TAIL);
@@ -56,19 +57,31 @@ sub bomse {
   my $ua = $quoter->user_agent();
 
 
-  foreach my $stocks (@stocks)
+foreach my $stocks (@stocks)
     {
            
       $url = $YIND_URL_HEAD.$stocks.$YIND_URL_TAIL;
-      print "\nURL is $url\n" ;
-      
       $reply = $ua->request(GET $url);
-		print $reply;
-	
 
-      if (1)
+      my $code=$reply->code;
+      my $desc = HTTP::Status::status_message($code);
+      my $headers=$reply->headers_as_string;
+      my $body =  $reply->content;
+
+
+      #Response variables available:
+      #Response code: 			$code
+      #Response description: 	$desc
+      #HTTP Headers:				$headers
+      #Response body				$body
+
+		print "\nFetched $stocks. Hit a key. \n";
+		my $user_input = <>;
+
+		if ( $code == 200 )
         {
-		
+			#HTTP_Response succeeded - parse the data
+
           $my_last = 50.0;
           $my_p_change = 1.5;
           $my_volume = 100;
@@ -93,14 +106,24 @@ sub bomse {
 
           $info{$stocks,"currency"} = "RON";
 
-        } else {
-          $info{$stocks, "success"}=0;
-          $info{$stocks, "errormsg"}="Error retreiving $stocks ";
         }
+
+		  #HTTP request fail
+        else
+        {
+        $info{$stocks, "success"}=0;
+        $info{$stocks, "errormsg"}="Error retrieving quote for $stocks. Attempt to fetch the URL $url resulted in HTTP response $code ($desc)";
+        }
+
+		  # if( !$info{$stocks, "success" })
+        # {
+        #  $info{$stocks, "success"}=0;
+        #  $info{$stocks, "errormsg"}="Error retrieving $stocks "; 
+        # }
     }
-  print "\nThis is BOMSE.pm\n";
-  return wantarray() ? %info : \%info;
-  return \%info;
+
+	return wantarray() ? %info : \%info;
+	return \%info;
 }
 
 1;
