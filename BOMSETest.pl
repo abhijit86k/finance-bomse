@@ -28,11 +28,8 @@ foreach my $stock (@stocks) {
 
 	my $regexp = $regexps{$stock};
 	ok($name =~ /$regexp/i);
-
-	ok($quotes{$stock, "exchange"} eq 'Bucharest Stock Exchange');
-	print($quotes{$stock, "exchange"});
+	ok($quotes{$stock, "exchange"} eq 'Temporarily using Bucharest Stock Exchange');
 	ok($quotes{$stock, "method"} eq 'bomse');
-
 	ok($quotes{$stock, "last"} > 0);
 	ok($quotes{$stock, "open"} =~ /^-?\d+\.\d+$/);
 	ok($quotes{$stock, "p_change"} =~ /^-?\d+\.\d+$/);
