@@ -1,8 +1,8 @@
 #!/usr/bin/perl -w
-#    This modules is based on the Finance::Quote::ASEGR module
+#    This module is based on the Finance::Quote::BSERO module
 #
-#    The code has been modified by Andrei Cipu <strainu@strainu.ro> to be able to
-#    retrieve stock information from the Bucharest Exchange in Romania.
+#    The code has been modified by Abhijit K to 
+#    retrieve stock information for Indian Stocks from Yahoo Finance
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,16 +24,11 @@ package Finance::Quote::BOMSE;
 require 5.005;
 
 use strict;
-use Data::Dumper;
 use JSON qw( decode_json );
-
-
 use vars qw($VERSION $YIND_URL_HEAD $YIND_URL_TAIL);
-
 use LWP::UserAgent;
 use HTTP::Request::Common;
 use HTML::TableExtract;
-
 use Time::Piece;
 
 $VERSION='0.1';
@@ -139,11 +134,7 @@ foreach my $stocks (@stocks)
         $info{$stocks, "errormsg"}="Error retrieving quote for $stocks. Attempt to fetch the URL $url resulted in HTTP response $code ($desc)";
         }
 
-		  # if( !$info{$stocks, "success" })
-        # {
-        #  $info{$stocks, "success"}=0;
-        #  $info{$stocks, "errormsg"}="Error retrieving $stocks "; 
-        # }
+	
     }
 
 	return wantarray() ? %info : \%info;
@@ -154,7 +145,7 @@ foreach my $stocks (@stocks)
 
 =head1 NAME
 
-Finance::Quote::BOMSE - Obtain quotes from Bombay Stock Exchange Under Development
+Finance::Quote::BOMSE - Obtain quotes as JSON from Yahoo for Indian stocks
 
 =head1 SYNOPSIS
 
@@ -162,21 +153,17 @@ Finance::Quote::BOMSE - Obtain quotes from Bombay Stock Exchange Under Developme
 
     $q = Finance::Quote->new;
 
-    %info = Finance::Quote->fetch("bomse","tlv");  # Only query BSERO
-    %info = Finance::Quote->fetch("india","brd"); # Failover to other sources OK.
+    %info = Finance::Quote->fetch("bomse","tlv");
 
 =head1 DESCRIPTION
 
-This module fetches information from the Bombay stock exchange. Under Development
+This module fetches information from Yahoo as JSON
 
 This module is loaded by default on a Finance::Quote object. It's
 also possible to load it explicity by placing "BOMSE" in the argument
 list to Finance::Quote->new().
 
-This module provides both the "bomse" and "india" fetch methods.
-Please use the "india" fetch method if you wish to have failover
-with future sources for Romanian stocks. Using the "bomse" method will
-guarantee that your information only comes from the Bombay Stock Exchange
+This module provides the "bomse" fetch method.
 
 =head1 LABELS RETURNED
 
@@ -186,6 +173,6 @@ volume, currency, method, exchange.
 
 =head1 SEE ALSO
 
-Bombay stock Exchange, BSERO
+BSERO
 
 =cut
