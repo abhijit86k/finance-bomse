@@ -80,13 +80,8 @@ foreach my $stocks (@stocks)
       #HTTP Headers:				$headers
       #Response body				$body
 
-		print "\nFetched $stocks. Hit a key. \n";
-		my $user_input = <>;
-
-		
-
 		if ( $code == 200 )
-        {
+			{
 			#HTTP_Response succeeded - parse the data
 			my $json_data = JSON::decode_json $body;				
 			#print ref($json_data);
@@ -100,7 +95,7 @@ foreach my $stocks (@stocks)
 			 $info{$stocks, "errormsg"}="Error retrieving quote for $stocks - no listing for this name found. Please check scrip name and the two letter extension (if any)";
 			 
 			}					
-			else
+		else
 			{			
 
 
