@@ -1,10 +1,31 @@
 =====================================================================
-Date	: 20131006
+Date	: 20131015
 Author	: Abhijit K
 =====================================================================
 
-Project to implement Stock Quote Picker for BSE/NSE.
+A PERL Module to fetch stock quotes for indian stocks, developed for use
+with Gnucash. Quotes are picked from Yahoo finance in JSON format
+and then parsed.
 
-Intended to replace and augment the files that come with the
-PERL Finance::Quote package 
-(located in /usr/share/perl5/Finance)
+The files here are intended to replace and augment those that come with the
+PERL Finance::Quote package (usually located in /usr/share/perl5/Finance)
+
+Based on the BSERO module for Romanian stocks documented here:
+http://www.strainu.ro/projects/bse-stock-prices-in-gnucash/
+
+Requires JSON, Datetime modules installed for Perl
+
+Installation:
+-------------
+Run the script install.sh
+
+Other useful stuff:
+-------------------
+Yahoo Finance URL Formats, Where NAME is the scrip name (SUZLON, or RECLTD)
+and XC is a two letter exchange code - BO for BSE (Bombay) and NS for NSE
+JSON:	http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=json
+XML:	http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=xml
+
+TODO:
+-----
+1. Create a system for allowing or disallowing failover to other methods

@@ -1,0 +1,4 @@
+169c169
+< 		@modules = qw/AEX AIAHK ASEGR ASX BMONesbittBurns Bourso Cdnfundlibrary Deka
+---
+> 		@modules = qw/AEX AIAHK ASEGR ASX BMONesbittBurns Bourso BOMSE Cdnfundlibrary Deka
