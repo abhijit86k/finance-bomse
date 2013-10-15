@@ -64,5 +64,5 @@ foreach my $stock (@stocks)
 
 print "\nChecking for a bogus stock: ";
 # Check that a bogus stock returns no-success.
-%quotes = $q->fetch("tsx", "BOGUS");
+%quotes = $q->fetch("bomse", "BOGUS");
 ok(! $quotes{"BOGUS","success"});
