@@ -34,6 +34,8 @@ use LWP::UserAgent;
 use HTTP::Request::Common;
 use HTML::TableExtract;
 
+use Time::Piece;
+
 $VERSION='0.1';
 
 my $YIND_URL_HEAD	= 'http://finance.yahoo.com/webservice/v1/symbols/';
@@ -104,7 +106,7 @@ foreach my $stocks (@stocks)
 
           my $json_resources = $json_data->{'list'}{'resources'}[0];
           my $json_response_type =  $json_resources->{'resource'}{classname};
-          #Check if $json_response_type is "Quote"
+          #TODO: Check if $json_response_type is "Quote" before attempting anything else
           my $json_symbol 		=  $json_resources->{'resource'}{'fields'}{'symbol'};
           my $json_volume 		=  $json_resources->{'resource'}{'fields'}{'volume'};
           my $json_timestamp 	=  $json_resources->{'resource'}{'fields'}{'ts'};
@@ -112,33 +114,25 @@ foreach my $stocks (@stocks)
           my $json_type 		=  $json_resources->{'resource'}{'fields'}{'type'};
           my $json_price 		=  $json_resources->{'resource'}{'fields'}{'price'};
 
-          print Dumper($json_volume); 
+          $my_p_change = +0.0;
 
-          $my_last = 50.0;
-          $my_p_change = 1.5;
-          $my_volume = 100;
-          $my_high = 52.1;
-          $my_low = 49.5;
-          $my_open = 45.5;
-          $my_date = "14.10.2013 15:47:00";
-          
           $info{$stocks, "success"}  =1;
-          $info{$stocks, "exchange"} ="Temporarily using Bucharest Stock Exchange";
+          $info{$stocks, "exchange"} ="Sourced from Yahoo Finance (as JSON)";
           $info{$stocks, "method"}   ="bomse";
-          $info{$stocks, "name"}     =$stocks;
-          $info{$stocks, "last"}     =$my_last;
-          $info{$stocks, "close"}    =$my_last;
+          $info{$stocks, "name"}     =$stocks.' ('.$json_name.')';
+          $info{$stocks, "last"}     =$json_price;
+          $info{$stocks, "close"}    =$json_price;
           $info{$stocks, "p_change"} =$my_p_change;
-          $info{$stocks, "volume"}   =$my_volume;
-          $info{$stocks, "high"}     =$my_high;
-          $info{$stocks, "low"}      =$my_low;
-          $info{$stocks, "open"}     =$my_open;
-          
-          
+          $info{$stocks, "volume"}   =$json_volume;
+          $info{$stocks, "high"}     =$json_price;
+          $info{$stocks, "low"}      =$json_price;
+          $info{$stocks, "open"}     =$json_price;
+
+          $my_date = localtime($json_timestamp)->strftime('%d.%m.%Y %T');
 
           $quoter->store_date(\%info, $stocks, {eurodate => $my_date});
 
-          $info{$stocks,"currency"} = "RON";
+          $info{$stocks,"currency"} = "INR";
 
         }
         }
