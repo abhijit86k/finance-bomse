@@ -145,7 +145,7 @@ foreach my $stocks (@stocks)
 
 =head1 NAME
 
-Finance::Quote::BOMSE - Obtain quotes as JSON from Yahoo for Indian stocks
+Finance::Quote::BOMSE - Obtain quotes from Yahoo Finance for Indian stocks
 
 =head1 SYNOPSIS
 
@@ -153,7 +153,7 @@ Finance::Quote::BOMSE - Obtain quotes as JSON from Yahoo for Indian stocks
 
     $q = Finance::Quote->new;
 
-    %info = Finance::Quote->fetch("bomse","tlv");
+    %info = Finance::Quote->fetch("bomse","SBIIN.NS");
 
 =head1 DESCRIPTION
 
