@@ -25,3 +25,7 @@ Yahoo Finance URL Formats, Where NAME is the scrip name (SUZLON, or RECLTD)
 and XC is a two letter exchange code - BO for BSE (Bombay) and NS for NSE
 JSON:	http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=json
 XML:	http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=xml
+
+TODO:
+-----
+1. Create a system for allowing or disallowing failover to other methods
