@@ -18,12 +18,15 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #    02111-1307, USA
+
+package Finance::Quote::BOMSE;
+
 require 5.005;
 
 use strict;
 use Data::Dumper;
 use JSON qw( decode_json );
-package Finance::Quote::BOMSE;
+
 
 use vars qw($VERSION $YIND_URL_HEAD $YIND_URL_TAIL);
 
@@ -87,8 +90,7 @@ foreach my $stocks (@stocks)
 			#print ref($json_data);
 			#print "size of hash:  " . keys( $json_data ) . ".\n";
 			
-			my $json_data_count= $json_data->{'list'}{'meta'}{'count'};
-			print "\n Got data with Count = $json_data_count \n"; 			
+			my $json_data_count= $json_data->{'list'}{'meta'}{'count'};			 			
 			
 			if ($json_data_count != 1 )
 			{
@@ -98,7 +100,21 @@ foreach my $stocks (@stocks)
 			}					
 			else
 			{			
-			 $my_last = 50.0;
+
+
+          my $json_resources = $json_data->{'list'}{'resources'}[0];
+          my $json_response_type =  $json_resources->{'resource'}{classname};
+          #Check if $json_response_type is "Quote"
+          my $json_symbol 		=  $json_resources->{'resource'}{'fields'}{'symbol'};
+          my $json_volume 		=  $json_resources->{'resource'}{'fields'}{'volume'};
+          my $json_timestamp 	=  $json_resources->{'resource'}{'fields'}{'ts'};
+          my $json_name 		=  $json_resources->{'resource'}{'fields'}{'name'};
+          my $json_type 		=  $json_resources->{'resource'}{'fields'}{'type'};
+          my $json_price 		=  $json_resources->{'resource'}{'fields'}{'price'};
+
+          print Dumper($json_volume); 
+
+          $my_last = 50.0;
           $my_p_change = 1.5;
           $my_volume = 100;
           $my_high = 52.1;
@@ -117,6 +133,8 @@ foreach my $stocks (@stocks)
           $info{$stocks, "high"}     =$my_high;
           $info{$stocks, "low"}      =$my_low;
           $info{$stocks, "open"}     =$my_open;
+          
+          
 
           $quoter->store_date(\%info, $stocks, {eurodate => $my_date});
 
