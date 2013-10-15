@@ -11,3 +11,5 @@ PERL Finance::Quote package
 
 BSERO module from:
 http://www.strainu.ro/projects/bse-stock-prices-in-gnucash/
+
+Requires JSON, Datetime modules installed for Perl
