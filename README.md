@@ -10,6 +10,9 @@ here: http://www.strainu.ro/projects/bse-stock-prices-in-gnucash/
 The module is named BOMSE because the plan was to pick quotes from the
 BOMbay Stock Exchange, but later changed to using Yahoo Finance.
 
+The code here is licensed under the GPL v2. See the license file for the
+full license.
+
 Prerequisites:
 ==============
 This module requires Perl (at least v5). This has been tested on Debian Wheezy
@@ -37,6 +40,7 @@ environment variable.
 Usage:
 ======
 Scrip names:
+------------
 Yahoo Finance identifies stocks by codes. Indian scrips have a name followed
 by a two letter extension identifying the exchange.
 e.g. State bank of India is SBIN.NS (on NSE) or SBI.BO (on BSE). Observe that
@@ -45,31 +49,36 @@ To look up the code visit http://in.finance.yahoo.com/. To double check, make
 sure that the quote is available in the JSON format (See last section below).
 
 With Gnucash:
-In gnucash, go to Tools>Security Editor. Select "Add".
-Fill up the following fields:
-Full name		:Name of stock as you want to see it.
-Symbol/Abbreviation	:The scrip name exactly as determined above, with the
-			 exchange information (e.g. SBIN.BO)
-Type			:Not critical, suggest use of NSE or BSE
-ISIN...			:Blank
-Fraction traded		:1/1
-Get online Quotes	:Selected
-Type of Source Quote	:Unknown > bomse
-Timezone		:Use local time
-Now hit OK, close the Security editor and save the Gnucash File.
-Go to Tools > Price Editor and click on Get online quotes.
+-------------
+In gnucash
+- go to Tools>Security Editor. Select "Add".
+- Fill up the following fields:
+	+ Full name		:Name of stock as you want to see it.
+	+ Symbol/Abbreviation	:The scrip name exactly as determined above, with the
+				 exchange information (e.g. SBIN.BO)
+	+ Type			:Not critical, suggest use of NSE or BSE
+	+ ISIN...		:Blank
+	+ Fraction traded 	:1/1
+	+ Get online Quotes	:Selected
+	+ Type of Source Quote	:Unknown > bomse
+	+ Timezone		:Use local time
+- Now hit OK, close the Security editor and save the Gnucash File.
+- Go to Tools > Price Editor and click on Get online quotes.
 See the gnucash manual on setting up automatic price retrieval.
-(http://gnucash.org/docs/v2.4/C/gnucash-guide/invest-stockprice1.html
-#invest-stockprice-auto2)
+(http://gnucash.org/docs/v2.4/C/gnucash-guide/invest-stockprice1.html#invest-stockprice-auto2)
 
+
+Contributing:
+=============
+Visit the project page on github: https://github.com/abhijit86k/finance-bomse
 
 Other useful stuff:
 ===================
 Yahoo Finance URL Formats, Where NAME is the scrip name (SUZLON, or RECLTD)
 and XC is a two letter exchange code - BO for BSE (Bombay) and NS for NSE.
 Note that the "NAME" might NOT be identical on different exchanges!
-JSON:	http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=json
-XML:	http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=xml
+- JSON:	http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=json
+- XML:	http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=xml
 
 TODO:
 =====
