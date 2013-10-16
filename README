@@ -10,14 +10,21 @@ and then parsed.
 The files here are intended to replace and augment those that come with the
 PERL Finance::Quote package (usually located in /usr/share/perl5/Finance)
 
-Based on the BSERO module for Romanian stocks documented here:
+Code here is based on the BSERO module for Romanian stocks documented here:
 http://www.strainu.ro/projects/bse-stock-prices-in-gnucash/
 
-Requires JSON, Datetime modules installed for Perl
+Requires JSON and Datetime modules installed for Perl
 
 Installation:
 -------------
-Run the script install.sh
+Look at the commands in install.sh. Basically the following needs to be done:
+Add "BOMSE" to the list of available methods in Quote.pm (located by default in
+something like /usr/share/perl5/Finance directory.
+
+Usage:
+------
+
+
 
 Other useful stuff:
 -------------------
