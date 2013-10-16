@@ -9,10 +9,13 @@ use Finance::Quote;
 
 BEGIN {plan tests => 26};
 
+#Ensure that print statements print in order
 autoflush STDOUT 1;
 
 my $q      = Finance::Quote->new();
-my @stocks = ("SUZLON.BO", "RECLTD.NS", "AMZNX");
+
+#List of stocks to fetch. Feel free to change this during testing
+my @stocks = ("SUZLON.BO", "RECLTD.NS", "AMZN");
 
 
 my %quotes = $q->fetch("bomse", @stocks);
@@ -22,6 +25,7 @@ ok(%quotes);
 
 foreach my $stock (@stocks) 
 	{
+	
 	my $name = $quotes{$stock, "name"};
 	print "\n\n#Testing $stock";
 	print "\nFetch successful?: ";
