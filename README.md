@@ -1,3 +1,9 @@
+NOTICE:
+=======
+The functionality of this module is now available in the Finance::Quote
+Perl module v1.27 onwards.
+
+
 Introduction:
 =============
 BOMSE is a PERL Module to fetch stock quotes for indian stocks, developed
