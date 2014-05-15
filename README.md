@@ -86,6 +86,22 @@ Note that the "NAME" might NOT be identical on different exchanges!
 - JSON:	http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=json
 - XML:	http://finance.yahoo.com/webservice/v1/symbols/NAME.XC/quote?format=xml
 
-TODO:
-=====
-1. Create a system for allowing or disallowing failover to other methods
+Migrating to F::Q 1.27 or later:
+================================
+This module is redundant with the availability of yahoo_json method in F::Q v1.27 and later.
+To change over, follow these steps:
+1. Run
+	perl -MCPAN -e shell
+as root. If you are behind a proxy make sure you export proxy settings in the $http_proxy variable.
+
+2. At the CPAN run
+	install Finance::Quote
+**This will install the latest version of F::Q and overwrite the BOMSE module this project provides.**
+3. After the update, exit to a user shell and run
+	gnc-fq-check
+and make sure you see yahoo_json in the output.
+4. Tell gnucash to use the new method:
+Open gnucash security editor. For each security, change the online quotes dropdown from bomse to yahoo_json.
+
+	
+
