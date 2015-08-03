@@ -1,8 +1,8 @@
 NOTICE:
 =======
 The functionality of this module is now available in the Finance::Quote
-Perl module v1.27 onwards.
-
+Perl module v1.27 onwards. This repository will continue to exist
+but will not be watched or maintained.
 
 Introduction:
 =============
