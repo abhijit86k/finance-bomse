@@ -12,15 +12,18 @@ BEGIN {plan tests => 26};
 #Ensure that print statements print in order
 autoflush STDOUT 1;
 
-my $q      = Finance::Quote->new();
+my $q = Finance::Quote->new();
 
 #List of stocks to fetch. Feel free to change this during testing
-my @stocks = ("SUZLON.BO", "RECLTD.NS", "AMZN");
-
+#my @stocks = ("SUZLON.BO", "RECLTD.NS", "AMZN");
+my @stocks = ("AMZN");
 
 my %quotes = $q->fetch("bomse", @stocks);
 print "\nChecking if any data is returned: ";
 ok(%quotes);
+
+print($q);
+exit();
 
 
 foreach my $stock (@stocks) 

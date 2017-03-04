@@ -30,6 +30,6 @@ else:
 	logging.info('Invalid scrip name. Check https://www.nseindia.com to get correct scrip name.')
 	exit()
 
-q=nse.get_quote(scrip)
+q=nse.get_quote(scrip, as_json=True)
 
 print(q)
