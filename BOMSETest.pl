@@ -16,14 +16,14 @@ my $q = Finance::Quote->new();
 
 #List of stocks to fetch. Feel free to change this during testing
 #my @stocks = ("SUZLON.BO", "RECLTD.NS", "AMZN");
-my @stocks = ("AMZN");
+my @stocks = ("SBIN", "INDIGO", "SUZLON", "HDFC");
 
 my %quotes = $q->fetch("bomse", @stocks);
 print "\nChecking if any data is returned: ";
 ok(%quotes);
 
-print($q);
-exit();
+#print($q);
+#exit();
 
 
 foreach my $stock (@stocks) 
@@ -43,7 +43,7 @@ foreach my $stock (@stocks)
 		print "Returned name: $name";
 		my $exchange = $quotes{$stock, "exchange"};
 		#print "\nCheck Exchange: $exchange ";
-		ok($exchange eq 'Sourced from Yahoo Finance (as JSON)');
+		ok($exchange eq 'Sourced from NSE via python-nsetools (as JSON)');
 
 		my $fetch_method = $quotes{$stock, "method"};
 		#print "Fetch Method: $fetch_method ";

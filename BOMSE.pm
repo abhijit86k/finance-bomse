@@ -60,83 +60,26 @@ sub bomse {
 foreach my $stocks (@stocks)
     {
            
-      $url = $YIND_URL_HEAD.$stocks.$YIND_URL_TAIL;
-      $reply = $ua->request(GET $url);
+ 	  #Call python:
+	  my $nsetoolsfetch = `/home/amod/Source/github/finance-bomse/nsetoolsfetch.py $stocks` ;
+	  my $quotedata = JSON::decode_json $nsetoolsfetch;
 
-	  #Debug:
-	  print(sprintf("\nAttempting to read from URL: %s", $url));
-	  #$reply_decoded_data = $reply->content;
+      if ( $quotedata->{'Success'} == 1 )
+		{
+		#{ print('Go'); }
+		#Success
 
-	  			
-	  $reply->decoded_content;
-	  print(sprintf("\nAttempting to read from URL: %s", $reply->content));
-
-      my $code=$reply->code;
-      my $desc = HTTP::Status::status_message($code);
-      my $headers=$reply->headers_as_string;
-      my $body =  $reply->content;
-
-
-      #Response variables available:
-      #Response code: 			$code
-      #Response description: 	$desc
-      #HTTP Headers:				$headers
-      #Response body				$body
-
-	  #Hack to inject data from python script
-	  #Set response code to 200
-	  $code = 200;
-
-	  #Call python:
-	  my $json_response_python = `/home/amod/Source/github/finance-bomse/nsetoolsfetch.py indigo` ;
-	  print($json_response_python);
-	  #print("\n\n");
-
-	  $body = $json_response_python;
-
-		if ( $code == 200 )
-			{
-			#HTTP_Response succeeded - parse the data
-			print ("\nAttempting to Decode JSON\n");
-			my $json_data = JSON::decode_json $body;				
-			#print ref($json_data);
-			print "size of hash:  " . keys( $json_data ) . ".\n";
-			#print($json_data);
-			
-			#my $json_data_count= $json_data->{'list'}{'meta'}{'count'};		
-
-			#Data count will always be 1
-			my $json_data_count= 1;
-			print("\nJSON Data count");	 			
-			print $json_data_count;
-			
-
-			if ($json_data_count != 1 )
-			{
-			 $info{$stocks, "success"}  =0;
-			 $info{$stocks, "errormsg"}="Error retrieving quote for $stocks - no listing for this name found. Please check scrip name and the two letter extension (if any)";
-			 
-			}					
-		else
-			{			
-
-	      print("\n\nDebugPrints:\n");
-		  print($json_data->{'series'});
-		  #return();
-          
-
-		  #TODO: Check if $json_response_type is "Quote" before attempting anything else
-          #my $json_symbol 		=  $json_resources->{'resource'}{'fields'}{'symbol'};
-          my $json_volume 		=  $json_data->{'quantityTraded'};
-          #my $json_timestamp 	=  $json_resources->{'resource'}{'fields'}{'ts'};
-          my $json_name 		=  $json_data->{'companyName'};
-          #my $json_type 		=  $json_resources->{'resource'}{'fields'}{'type'};
-          my $json_price 		=  $json_data->{'lastPrice'};
-		  my $json_high52 		=  $json_data->{'high52'};
-		  my $json_low52 		=  $json_data->{'low52'};
-		  my $json_dayhigh 		=  $json_data->{'dayHigh'};
-		  my $json_daylow 		=  $json_data->{'dayLow'};
-		  my $json_open 		=  $json_data->{'open'};
+		  my $json_symbol 		=  $quotedata->{'symbol'};
+          my $json_volume 		=  $quotedata->{'quantityTraded'};
+          my $json_timestamp 	=  $quotedata->{'timestamp'};
+          my $json_name 		=  $quotedata->{'companyName'};
+          my $json_type 		=  $quotedata->{'series'};
+          my $json_price 		=  $quotedata->{'lastPrice'};
+		  my $json_high52 		=  $quotedata->{'high52'};
+		  my $json_low52 		=  $quotedata->{'low52'};
+		  my $json_dayhigh 		=  $quotedata->{'dayHigh'};
+		  my $json_daylow 		=  $quotedata->{'dayLow'};
+		  my $json_open 		=  $quotedata->{'open'};
 
 
           $my_p_change = +0.0;
@@ -152,27 +95,22 @@ foreach my $stocks (@stocks)
           $info{$stocks, "high"}     =$json_dayhigh;
           $info{$stocks, "low"}      =$json_daylow;
           $info{$stocks, "open"}     =$json_open;
-
-
 		  
-          #$my_date = localtime($json_timestamp)->strftime('%d.%m.%Y %T');
-
+          $my_date = localtime($json_timestamp)->strftime('%d.%m.%Y %T');
+			#print $my_date;
           $quoter->store_date(\%info, $stocks, {eurodate => $my_date});
-
           $info{$stocks,"currency"} = "INR";
+		}
 
-        }
-        }
-
-		  #HTTP request fail
-        else
-        {
-        $info{$stocks, "success"}=0;
-        $info{$stocks, "errormsg"}="Error retrieving quote for $stocks. Attempt to fetch the URL $url resulted in HTTP response $code ($desc)";
-        }
-
+	  else
+			{
+			#{ print('Fail'); }
+			#Fail
+			 $info{$stocks, "success"}  =0;
+			 $info{$stocks, "errormsg"}="Error retrieving quote for $stocks - no listing for this name found. Please check scrip name and the two letter extension (if any)";
+			}
 	
-    }
+}
 
 	return wantarray() ? %info : \%info;
 	return \%info;
