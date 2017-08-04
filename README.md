@@ -1,3 +1,10 @@
+NSETOOLS PORT:
+==============
+This branch contains highly experimental code.
+See the other README file.
+
+
+
 NOTICE:
 =======
 The functionality of this module is now available in the Finance::Quote
