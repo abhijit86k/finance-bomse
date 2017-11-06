@@ -15,7 +15,6 @@ autoflush STDOUT 1;
 my $q = Finance::Quote->new();
 
 #List of stocks to fetch. Feel free to change this during testing
-#my @stocks = ("SUZLON.BO", "RECLTD.NS", "AMZN");
 my @stocks = ("SBIN", "INDIGO", "SUZLON", "HDFC");
 
 my %quotes = $q->fetch("bomse", @stocks);

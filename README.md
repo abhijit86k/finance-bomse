@@ -1,21 +1,9 @@
-NSETOOLS PORT:
-==============
-This branch contains highly experimental code.
-See the other README file.
-
-
-
-NOTICE:
-=======
-The functionality of this module is now available in the Finance::Quote
-Perl module v1.27 onwards. This repository will continue to exist
-but will not be watched or maintained.
-
 Introduction:
 =============
-BOMSE is a PERL Module to fetch stock quotes for indian stocks, developed
-for use with Gnucash. Quotes are picked from the NSE website using the python
-nsetools module in JSON format and then parsed.
+BOMSE is a PERL Module to fetch stock quotes for stocks listed on the National
+Stock Exchange of India, developed for use with Gnucash. Quotes are picked
+from the NSE website using the nsetools python module in JSON format and
+then parsed.
 
 The files here are intended to augment those that come with the
 PERL Finance::Quote package (usually located in /usr/share/perl5/Finance)
@@ -24,27 +12,41 @@ here: http://www.strainu.ro/projects/bse-stock-prices-in-gnucash/
 
 The module is named BOMSE because the plan was to pick quotes from the
 BOMbay Stock Exchange, but later changed to using Yahoo Finance, and 
-when Yahoo closed down its JSON service, moved to python-nsetools
+when Yahoo closed down its JSON service, moved to python-nsetools.
+An older version of this module (using Yahoo-JSON service) was integrated
+into the PERL finance quote module as Yahoo-JSON.
 
 The code here is licensed under the GPL v2. See the license file for the
 full license.
 
 Prerequisites:
 ==============
-This module requires Perl (at least v5). This has been tested on Debian Wheezy
-as of 2013 October. Although no other distributions or operating systems have
+This module requires Perl (at least v5). This has been tested on Debian 8 and
+Ubuntu 16.04 as of November 1 2017.
+
+Although no other distributions or operating systems have
 been tested yet, there should be no major problems. 
+
 This module requires the JSON and Datetime modules installed for Perl.
 This version also requires python modules nsetools and its dependencies.
 
 Installation:
 =============
-Look at the commands in install.sh. Basically the following needs to be done:
-Add "BOMSE" to the list of available methods in Quote.pm (located by default
-in something like /usr/share/perl5/Finance directory). You can edit this file
-by hand or try to apply the patch provided (Quotes.pm.patch). Next, copy the 
-module (BOMSE.pm) next to the other modules (typically under
+Basically the following needs to be done:
+1. Add "BOMSE" to the list of available methods in Quote.pm (located by
+default in /usr/share/perl5/Finance directory, or equivalent). You can edit
+this file by hand or try to apply the patch provided (Quotes.pm.patch).
+
+2. Copy the module (BOMSE.pm) next to the other modules (typically under
 /usr/share/perl5/Finance/Quote/)
+
+3. Copy the file nsetoolsfetch.py somewhere in your $PATH
+The easiest way, in my opinion, is to create a hard link to this file in your
+users bin directory, with a command such as the following:
+#$ ln ./nsetoolsfetch ~/bin/
+Note that symlinks don't seem to work, hard links do.
+
+Tip: Look at the commands in install.sh.
 
 Testing:
 ========
@@ -54,7 +56,7 @@ argument. E.g.:
 $./nsetoolsfetch.py INDIGO
 
 This should print out a valid JSON-formatted quote.
-If you get {"Sucess":0} it means that either yout ticker symbol is wrong, or
+If you get {"Sucess":0} it means that either your ticker symbol is wrong, or
 python is unable to fetch quotes.
 
 Next, to test whether Perl modules are correctly installed, run 
@@ -63,7 +65,7 @@ $ gnc-fq-check
 
 The output lists all quote fetch methods and should include "bomse"
 
-Them to test quote fetch using bomse, run
+Then, to test quote fetch using bomse, run
 
 $./BOMTest.pl
 
@@ -105,8 +107,7 @@ Contributing:
 =============
 Visit the project page on github: https://github.com/abhijit86k/finance-bomse
 
-Other useful stuff:
+Notes:
 ===================
-Yahoo Finance seems to have permanently closed down the JSON Quote service.
-	
-
+Yahoo Finance seems to have permanently closed down the JSON Quote service
+for some exchanges. Since 2016, it does not seem to work for Indian stocks.

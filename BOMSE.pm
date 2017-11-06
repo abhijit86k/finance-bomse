@@ -61,7 +61,7 @@ foreach my $stocks (@stocks)
     {
            
  	  #Call python:
-	  my $nsetoolsfetch = `/home/amod/Source/github/finance-bomse/nsetoolsfetch.py $stocks` ;
+	  my $nsetoolsfetch = `nsetoolsfetch.py $stocks` ;
 	  my $quotedata = JSON::decode_json $nsetoolsfetch;
 
       if ( $quotedata->{'Success'} == 1 )

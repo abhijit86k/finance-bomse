@@ -4,4 +4,7 @@
 #sudo patch /usr/share/perl5/Finance/Quote.pm ./Quotes.pm.patch
 
 #2. Copy the new file into the Module
-sudo cp ./BOMSE.pm /usr/share/perl5/Finance/Quote/BOMSE.pm
+#sudo cp ./BOMSE.pm /usr/share/perl5/Finance/Quote/BOMSE.pm
+
+#3. Symlink the python script
+#ln ./nsetoolsfetch.py ~/bin/
